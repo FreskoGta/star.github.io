@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Технические работы</title>
+    <style>
+        /* ========== БАЗОВЫЕ НАСТРОЙКИ (1-100) ========== */
+        :root {
+            --primary-color: #0088cc;
+            --secondary-color: #00aced;
+            --text-glow: 0 0 10px rgba(255, 255, 255, 0.7);
+            --box-glow: 0 0 30px rgba(0, 136, 204, 0.6);
+            --transition-speed: 0.4s;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        body {
+            font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+            position: fixed;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            line-height: 1.6;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ========== ОСНОВНОЙ КОНТЕЙНЕР (101-200) ========== */
+        .main-container {
+            position: relative;
+            z-index: 100;
+            width: 95%;
+            max-width: 600px;
+            padding: 2.5rem;
+            background: rgba(5, 5, 15, 0.65);
+            border-radius: 1.5rem;
+            box-shadow: var(--box-glow), 
+                        0 0 0 1px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transform-style: preserve-3d;
+            animation: float 8s ease-in-out infinite, 
+                       containerGlow 6s ease-in-out infinite alternate;
+            overflow: hidden;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateX(0.5deg) rotateY(0.5deg); }
+            50% { transform: translateY(-1.5rem) rotateX(1deg) rotateY(1deg); }
+        }
+        
+        @keyframes containerGlow {
+            0% { box-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 
+                             0 0 0 1px rgba(255, 255, 255, 0.1); }
+            100% { box-shadow: 0 0 40px rgba(0, 136, 204, 0.5), 
+                               0 0 60px rgba(0, 0, 0, 0.7), 
+                               0 0 0 1px rgba(255, 255, 255, 0.1); }
+        }
+        
+        .main-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, 
+                                      rgba(0, 136, 204, 0.1) 0%, 
+                                      transparent 70%);
+            animation: rotateGlow 20s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes rotateGlow {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ========== ТИПОГРАФИКА (201-300) ========== */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+            color: transparent;
+            background: linear-gradient(135deg, #ffffff, #c0c0c0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: var(--text-glow);
+            animation: textPulse 3s ease-in-out infinite alternate;
+            position: relative;
+            display: inline-block;
+        }
+        
+        @keyframes textPulse {
+            0% { 
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 
+                             0 0 20px rgba(0, 136, 204, 0.3);
+                transform: scale(1);
+            }
+            100% { 
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 
+                             0 0 40px rgba(0, 136, 204, 0.5);
+                transform: scale(1.02);
+            }
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                                      transparent, 
+                                      rgba(255, 255, 255, 0.5), 
+                                      transparent);
+            animation: underlinePulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes underlinePulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        .message {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            line-height: 1.7;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== КНОПКА (301-400) ========== */
+        .telegram-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, 
+                                     var(--primary-color), 
+                                     var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 3rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.05rem;
+            transition: all var(--transition-speed) ease;
+            box-shadow: 0 5px 20px rgba(0, 136, 204, 0.4), 
+                       inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            z-index: 1;
+            animation: buttonFloat 4s ease-in-out infinite;
+        }
+        
+        @keyframes buttonFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .telegram-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                                      transparent, 
+                                      rgba(255, 255, 255, 0.2), 
+                                      transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .telegram-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 136, 204, 0.6), 
+                       inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        }
+        
+        .telegram-link:hover::before {
+            left: 100%;
+        }
+        
+        .telegram-link i {
+            margin-right: 0.7rem;
+            font-size: 1.3rem;
+        }
+
+        /* ========== ФОН И АНИМАЦИИ (401-600) ========== */
+        .sky-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            animation: skyTransition 30s infinite linear;
+        }
+        
+        @keyframes skyTransition {
+            0%, 40% { 
+                background: linear-gradient(to bottom, #020111, #0a0a2a, #1a1a3a); 
+            }
+            50%, 90% { 
+                background: linear-gradient(to bottom, #1a2a6c, #537895, #91b3d7); 
+            }
+            100% { 
+                background: linear-gradient(to bottom, #020111, #0a0a2a, #1a1a3a); 
+            }
+        }
+        
+        /* Луна */
+        .moon {
+            position: absolute;
+            top: 15%;
+            right: 15%;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 30% 30%, 
+                                     #f9f9f9, 
+                                     #c0c0c0);
+            border-radius: 50%;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
+            z-index: 2;
+            animation: moonOrbit 30s infinite linear, 
+                       moonGlow 5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes moonOrbit {
+            0%, 40% { 
+                transform: translate(0, 0) scale(1); 
+                opacity: 1; 
+            }
+            50% { 
+                transform: translate(100px, 100px) scale(0.8); 
+                opacity: 0; 
+            }
+            90%, 100% { 
+                transform: translate(100px, 100px) scale(0.8); 
+                opacity: 0; 
+            }
+        }
+        
+        @keyframes moonGlow {
+            from { box-shadow: 0 0 30px rgba(255, 255, 255, 0.3); }
+            to { box-shadow: 0 0 60px rgba(255, 255, 255, 0.6); }
+        }
+        
+        .moon::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 25px;
+            height: 25px;
+            background: rgba(200, 200, 200, 0.3);
+            border-radius: 50%;
+            box-shadow: 
+                35px -15px 0 8px rgba(200, 200, 200, 0.2),
+                60px 25px 0 12px rgba(200, 200, 200, 0.15),
+                -25px 50px 0 10px rgba(200, 200, 200, 0.25);
+        }
+        
+        /* Солнце */
+        .sun {
+            position: absolute;
+            bottom: 15%;
+            left: 15%;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle at 30% 30%, 
+                                     #ffde00, 
+                                     #ff8c00);
+            border-radius: 50%;
+            box-shadow: 0 0 60px rgba(255, 214, 0, 0.7),
+                        0 0 120px rgba(255, 165, 0, 0.5);
+            z-index: 2;
+            animation: sunOrbit 30s infinite linear,
+                       sunPulse 3s ease-in-out infinite alternate;
+            opacity: 0;
+        }
+        
+        @keyframes sunOrbit {
+            0%, 40% { 
+                transform: translate(-100px, 100px) scale(0.8); 
+                opacity: 0; 
+            }
+            50%, 90% { 
+                transform: translate(0, 0) scale(1); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translate(100px, -100px) scale(0.8); 
+                opacity: 0; 
+            }
+        }
+        
+        @keyframes sunPulse {
+            from { box-shadow: 0 0 50px rgba(255, 214, 0, 0.6), 
+                              0 0 100px rgba(255, 165, 0, 0.4); }
+            to { box-shadow: 0 0 70px rgba(255, 214, 0, 0.8), 
+                            0 0 140px rgba(255, 165, 0, 0.6); }
+        }
+        
+        /* Звезды */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            animation: starsFade 30s infinite linear;
+        }
+        
+        @keyframes starsFade {
+            0%, 40% { opacity: 1; }
+            50%, 90% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            opacity: var(--opacity);
+            filter: drop-shadow(0 0 5px white);
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { 
+                opacity: var(--opacity); 
+                transform: scale(1); 
+            }
+            50% { 
+                opacity: calc(var(--opacity) * 0.3); 
+                transform: scale(0.6); 
+            }
+        }
+        
+        /* Облака */
+        .clouds {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            animation: cloudsAppear 30s infinite linear;
+        }
+        
+        @keyframes cloudsAppear {
+            0%, 40% { opacity: 0.1; }
+            50%, 90% { opacity: 0.7; }
+            100% { opacity: 0.1; }
+        }
+        
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            filter: blur(10px);
+            animation: cloudMove linear infinite;
+        }
+        
+        @keyframes cloudMove {
+            to { transform: translateX(100vw); }
+        }
+        
+        /* Горы */
+        .mountains {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            z-index: 2;
+            clip-path: polygon(
+                0% 100%, 5% 80%, 10% 85%, 15% 75%, 20% 90%, 
+                25% 70%, 30% 95%, 35% 65%, 40% 100%, 45% 60%, 
+                50% 90%, 55% 55%, 60% 85%, 65% 50%, 70% 80%, 
+                75% 45%, 80% 75%, 85% 40%, 90% 70%, 95% 35%, 
+                100% 100%
+            );
+            animation: mountainsColor 30s infinite linear;
+        }
+        
+        @keyframes mountainsColor {
+            0%, 40% { 
+                background: linear-gradient(to top, #1a1a1a, #3a3a3a); 
+            }
+            50%, 90% { 
+                background: linear-gradient(to top, #2d4a6e, #5a7ca5); 
+            }
+            100% { 
+                background: linear-gradient(to top, #1a1a1a, #3a3a3a); 
+            }
+        }
+
+        /* ========== ДОПОЛНИТЕЛЬНЫЕ ЭФФЕКТЫ (601-700) ========== */
+        .tech-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+        
+        .tech-icon {
+            font-size: 2rem;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            animation: iconFloat 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 5px rgba(0, 136, 204, 0.5));
+        }
+        
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        
+        .tech-icon:nth-child(1) { animation-delay: 0s; }
+        .tech-icon:nth-child(2) { animation-delay: 0.2s; }
+        .tech-icon:nth-child(3) { animation-delay: 0.4s; }
+        .tech-icon:nth-child(4) { animation-delay: 0.6s; }
+        .tech-icon:nth-child(5) { animation-delay: 0.8s; }
+        
+        .tech-icon:hover {
+            opacity: 1;
+            transform: translateY(-5px) scale(1.1);
+            filter: drop-shadow(0 0 10px rgba(0, 136, 204, 0.8));
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, 
+                                      var(--primary-color), 
+                                      var(--secondary-color));
+            border-radius: 3px;
+            animation: progressLoad 3s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(0, 136, 204, 0.5);
+        }
+        
+        @keyframes progressLoad {
+            0% { width: 0; left: 0; }
+            50% { width: 100%; left: 0; }
+            100% { width: 0; left: 100%; }
+        }
+
+        /* ========== АДАПТИВНОСТЬ (701-800) ========== */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1.8rem;
+                border-radius: 1.2rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 1.2rem;
+            }
+            
+            .message {
+                font-size: 1.1rem;
+            }
+            
+            .moon {
+                width: 90px;
+                height: 90px;
+                right: 10%;
+            }
+            
+            .sun {
+                width: 110px;
+                height: 110px;
+                left: 10%;
+            }
+            
+            .telegram-link {
+                padding: 0.9rem 2rem;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 1.5rem;
+                border-radius: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+                letter-spacing: 0.1rem;
+            }
+            
+            .message {
+                font-size: 1rem;
+            }
+            
+            .moon {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .sun {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .telegram-link {
+                padding: 0.8rem 1.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .tech-icons {
+                gap: 1rem;
+            }
+            
+            .tech-icon {
+                font-size: 1.6rem;
+            }
+        }
+        
+        @media (max-height: 700px) {
+            .main-container {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+            
+            .message {
+                font-size: 1rem;
+                margin: 0.8rem 0;
+            }
+            
+            .telegram-link {
+                margin-top: 1.5rem;
+                padding: 0.8rem 2rem;
+            }
+            
+            .tech-icons {
+                margin-top: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Анимированный фон -->
+    <div class="sky-container">
+        <div class="moon"></div>
+        <div class="sun"></div>
+        <div class="stars" id="stars"></div>
+        <div class="clouds" id="clouds"></div>
+        <div class="mountains"></div>
+    </div>
+    
+    <!-- Основной контент -->
+    <div class="main-container">
+        <h1>ТЕХНИЧЕСКИЕ РАБОТЫ</h1>
+        
+        <div class="message">
+            В настоящее время проводятся работы по улучшению сервиса
+        </div>
+        
+        <div class="message">
+            Сайт временно недоступен
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        
+        <div class="message">
+            Приносим извинения за временные неудобства
+        </div>
+        
+        <a href="@StarChec_bot" class="telegram-link">
+            <i class="fab fa-telegram"></i> Наш Telegram-бот
+        </a>
+        
+        <div class="tech-icons">
+            <div class="tech-icon">⚙️</div>
+            <div class="tech-icon">🔧</div>
+            <div class="tech-icon">🛠️</div>
+            <div class="tech-icon">💻</div>
+            <div class="tech-icon">🚀</div>
+        </div>
+    </div>
+
+    <script>
+        // Создание звезд
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 250; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            const size = Math.random() * 3 + 1;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 70 + 5;
+            const duration = Math.random() * 6 + 4;
+            const opacity = Math.random() * 0.8 + 0.2;
+            const delay = Math.random() * 5;
+            
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${posX}%`;
+            star.style.top = `${posY}%`;
+            star.style.animationDuration = `${duration}s`;
+            star.style.animationDelay = `${delay}s`;
+            star.style.setProperty('--opacity', opacity);
+            star.style.setProperty('--duration', `${duration}s`);
+            
+            starsContainer.appendChild(star);
+        }
+        
+        // Создание облаков
+        const cloudsContainer = document.getElementById('clouds');
+        for (let i = 0; i < 15; i++) {
+            const cloud = document.createElement('div');
+            cloud.classList.add('cloud');
+            
+            const width = Math.random() * 250 + 50;
+            const height = width * (Math.random() * 0.4 + 0.2);
+            const posY = Math.random() * 50 + 5;
+            const duration = Math.random() * 200 + 150;
+            const delay = Math.random() * -200;
+            const opacity = Math.random() * 0.5 + 0.3;
+            
+            cloud.style.width = `${width}px`;
+            cloud.style.height = `${height}px`;
+            cloud.style.top = `${posY}%`;
+            cloud.style.left = `${Math.random() * 100}%`;
+            cloud.style.animationDuration = `${duration}s`;
+            cloud.style.animationDelay = `${delay}s`;
+            cloud.style.opacity = opacity;
+            
+            cloudsContainer.appendChild(cloud);
+        }
+    </script>
+</body>
+</html>
